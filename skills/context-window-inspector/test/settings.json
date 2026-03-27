@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "web-reader": {
+      "command": "web-reader-server",
+      "args": ["--port", "8080"]
+    },
+    "pdf-tools": {
+      "command": "pdf-tools-server"
+    },
+    "sequencing": {
+      "command": "sequencing-server",
+      "args": ["--verbose"]
+    },
+    "github-api": {
+      "command": "github-api-server"
+    }
+  }
+}

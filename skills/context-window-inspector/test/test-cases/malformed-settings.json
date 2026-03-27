@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "web-reader": {
+      "command": "web-reader-server",
+      "args": ["--port", "8080"]
+    },
+    "broken-server": {
+      "command": "broken-server",
+      "args": ["--test"]
+    },
+    // Missing closing brace
+    "unclosed": {
+      "command": "test-server"
+  
+  "anotherKey": "value"
+}
