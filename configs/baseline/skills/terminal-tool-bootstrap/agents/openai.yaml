@@ -1,0 +1,4 @@
+interface:
+  display_name: "Terminal Tool Bootstrap"
+  short_description: "Install and wire terminal tool configs"
+  default_prompt: "Use $terminal-tool-bootstrap to install and configure yazi, zellij, tmux, or related terminal tools on this machine."
