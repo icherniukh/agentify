@@ -1,0 +1,4 @@
+interface:
+  display_name: "Python Class Design"
+  short_description: "Review Python class structure and spot ownership and abstraction mistakes"
+  default_prompt: "Use $python-class-design to review this Python design and point out class design mistakes or better object ownership."

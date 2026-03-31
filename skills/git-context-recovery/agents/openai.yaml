@@ -1,0 +1,4 @@
+interface:
+  display_name: "Git Context Recovery"
+  short_description: "Recover previous task context quickly from git history and project docs"
+  default_prompt: "Use $git-context-recovery to recover the latest relevant work context from git history before we continue."

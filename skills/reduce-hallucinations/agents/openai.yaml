@@ -1,0 +1,4 @@
+interface:
+  display_name: "Reduce Hallucinations"
+  short_description: "Ground prompts and outputs in source material when accuracy matters"
+  default_prompt: "Use $reduce-hallucinations to make this prompt or output more grounded, auditable, and resistant to unsupported claims."

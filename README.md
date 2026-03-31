@@ -106,6 +106,7 @@ Guidance:
 - symlink the **entire** skill directory, not just `SKILL.md`
 - expect to restart Codex if a newly added skill is not picked up immediately
 - do not assume a parallel `~/.codex/agents` install path
+- use `scripts/link-agent-assets.sh --codex-only --apply` if you want the curated Codex-ready skill subset symlinked into `~/.codex/skills/`
 
 ### Codex Plugin Direction
 

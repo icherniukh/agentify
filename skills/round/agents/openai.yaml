@@ -1,0 +1,4 @@
+interface:
+  display_name: "Round"
+  short_description: "Resume work cleanly by loading and rolling forward session context"
+  default_prompt: "Use $round to recover the previous session context and prepare a clean handoff into the next work session."

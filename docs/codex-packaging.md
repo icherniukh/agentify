@@ -73,6 +73,10 @@ Supported local workflows:
 - copy the full skill directory into `~/.codex/skills/`
 - symlink the full skill directory into `~/.codex/skills/`
 
+Repo helper:
+
+- `scripts/link-agent-assets.sh --codex-only --apply` links the curated Codex-ready subset, not every skill in the repo
+
 Recommended practice:
 
 - symlink the entire skill folder, not just `SKILL.md`
