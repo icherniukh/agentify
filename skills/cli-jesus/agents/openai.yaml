@@ -1,0 +1,4 @@
+interface:
+  display_name: "CLI Jesus"
+  short_description: "Fast command-line answers from proven Unix patterns"
+  default_prompt: "Use $cli-jesus to show the best command-line way to do this."

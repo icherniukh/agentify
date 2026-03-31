@@ -1,11 +1,6 @@
 ---
 name: scout
-description: >
-  Use proactively in three situations:
-  (1) WORKAROUND DETECTION: Claude is about to write a custom script, manual parser, or ad-hoc solution for a capability that likely has an existing MCP, plugin, or agent - e.g., "I'll write a Python script to parse this MHTML/PDF/HTML file", "let me implement a scraper", "as a workaround I'll...", "I'll manually extract...".
-  (2) IMPLICIT TOOL NEED: User mentions working with a file format, external service, or capability not well-handled by built-in tools - e.g., MHTML, large PDFs, OCR, email, Slack, Jira, web scraping, audio transcription, image processing, calendar, database, or any third-party API.
-  (3) EXPLICIT SEARCH REQUEST: User says "search for tools", "find an MCP", "is there a plugin for", "does something exist for", "what agents handle", "run scout", or similar ecosystem discovery language.
-  Searches GitHub (anthropics/skills, ccplugins/marketplace, wshobson/agents, obra/superpowers), MCP directories, and community sources. Returns ranked findings with fit scores, install complexity, and build-vs-buy recommendation.
+description: Claude Code ecosystem discovery specialist - finds existing plugins, agents, skills, MCPs, and conventions matching your problem statement
 model: sonnet
 tools:
   - WebSearch
