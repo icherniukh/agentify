@@ -1,119 +1,159 @@
-# ccconfig — Claude Code Configuration Management
+# ccconfig
 
-> **This repo is the proposed canonical home.** See [Consolidation](#consolidation) below.
+Reusable skills and runtime adapters for two related but different environments:
 
----
+- **Claude Code** uses skills and agents.
+- **Codex** uses skills and plugins.
 
-## The Three Repos Problem
+This repository treats **skills** as the canonical reusable content. Claude-specific agents live in [`agents/`](./agents), while Codex support is documented as skill installation plus future plugin packaging rather than a direct agent-to-agent mapping.
 
-Three repos exist for the same purpose — improving the Claude Code system config:
+## What This Repo Is
 
-| Repo | Created | Status | Purpose |
-|------|---------|--------|---------|
-| `up_claude` | Dec 2025 | Historical | Design deliverable for a "workflow optimization agent" |
-| `claude-configs` | Dec 2025 | Active but sparse | Meta-repo for config experimentation; born from the claude-mem incident |
-| `ccconfig` | Mar 2026 | Newest, most organized | Versioned configs + agent/skill design specs |
+This is a catalog of:
 
----
+- reusable workflow skills under [`skills/`](./skills)
+- Claude-specific runtime adapters under [`agents/`](./agents)
+- packaging and compatibility references under [`configs/`](./configs)
+- curated design history under [`docs/`](./docs)
+- preserved raw research under [`investigations/`](./investigations) and selected [`tasks/`](./tasks)
 
-## What's In Each
+This repo is **not** currently an active backup/deploy/testing platform for Claude or Codex configs. Some older documents describe that direction; they are retained as historical source material, not current product behavior.
 
-### `up_claude` — Design Consultation Deliverable
+## Runtime Model
 
-A one-session package produced when designing what became Kim. Contains:
+### Claude Code
 
-- **Optimization research** — 5 workflow patterns (context staging, selective tools, prompt hygiene, task decomposition, state management) with token savings estimates
-- **15 common mistakes** framework, tiered by impact
-- **`kim-evolution/kim.md`** — early Kim agent definition (superseded by current Kim at `~/.claude/agents/kim.md`)
-- `KIM_DEVELOPMENT_MASTER_PLAN.md` (1956 lines) — the most complete historical design record
-- `AGENT_IMPLEMENTATION_GUIDE.md`, `AGENT_DESIGN_SPEC.md`, case studies, quickstart, etc.
+- **Canonical content**: skills in `skills/<name>/SKILL.md`
+- **Runtime adapters**: agent definitions in `agents/*.md`
+- **Install flow**: described in [`AGENTS.md`](./AGENTS.md)
 
-**Verdict:** Mostly superseded. The research is baked into the actual Kim agent and config. Keep as an archive. Only `kim-evolution/kim.md` has marginal reuse value for diffing against current Kim.
+### Codex
 
----
+- **Canonical content**: skills in `skills/<name>/SKILL.md`
+- **Optional metadata**: `skills/<name>/agents/openai.yaml`
+- **Installable distribution unit**: plugins
+- **Local development path**: direct skill installation or symlink-based authoring
 
-### `claude-configs` — Operational Config Experimentation Repo
+Important distinction:
 
-Born from the **claude-mem incident (2025-12-18)**: the plugin burned 1.98M tokens (~$30) creating 521 memory observations with 0% cross-session reuse. Every `Read`/`Grep`/`Glob`/`WebFetch` call triggered a PostToolUse hook that created an observation — codebase explorations generated 95+ observations in 8 minutes.
+- `SKILL.md` is the canonical skill artifact.
+- `agents/openai.yaml` is optional Codex/OpenAI metadata for UX and dependency declaration.
+- Plugins package one or more skills plus optional assets, MCP/app integrations, and UI metadata.
 
-Contains:
+## Portability
 
-- **`investigations/2025-12-18-claudemem-waste/findings.md`** — the postmortem (keep)
-- **`roadmap.md`** — 4-phase optimization roadmap: audit/cleanup → observability → proactive optimization → experimentation framework (keep, still relevant)
-- **`plan.md`** — "search first, understand, inventory, observe" philosophy distilled from the incident (keep)
-- **`initial-user-request.txt`** — the 6 questions that started everything (archive)
-- **`.claude/`** — live Claude Code config: `commands/`, `settings.json`, `settings.local.json`, `CLAUDE.md` (merge into ccconfig)
-- **`.mcp.json`** — MCP server definitions: sequential-thinking, filesystem, fetch, memory (evaluate; note: memory MCP is ironic given the incident)
-- **`configs/`**, **`docs/`**, **`scripts/`** — all empty (planned but never populated)
-- **`claude-viewer/`** — a viewer tool (evaluate)
+This repo contains a mix of portable and runtime-specific artifacts.
 
-**Verdict:** Has the best narrative context (the incident, the lessons, the roadmap) and some live config. Directories are mostly empty stubs matching what ccconfig already has. Merge the docs and `.claude/` content in; discard the empty structure.
+### Portable-first
 
----
+These are the best current candidates for dual use in Claude Code and Codex with minimal adaptation:
 
-### `ccconfig` — This Repo (Canonical Going Forward)
+- `cli-jesus`
+- `conventional-commits`
+- `git-context-recovery`
+- `python-class-design`
+- `reduce-hallucinations`
+- `round`
+- `terminal-tool-bootstrap`
 
-Contains:
+### Likely Codex wrapper needed
 
-- **`AGENTS.md`** — peer-reviewed specs for three agents:
-  1. **Context Window Inspector** (skill) — reconstructs what's in context from disk, estimates token cost, flags staleness/redundancy. Technically sound: acknowledges Claude has no programmatic context access, uses character-count heuristics labeled as estimates.
-  2. **Kim Agent** — completed. Reduced from 451→162 lines. Backup at `configs/baseline/agents/kim.md`. Changes documented.
-  3. **Config Cleaner** (agent) — detects stale references, duplicate instructions, missing binaries, oversized agents, orphaned files. Report-only, no modifications.
-- **`CLAUDE.md`** — detailed project instructions covering architecture, workflows, testing philosophy, metrics categories
-- **`configs/`** — versioned config sets (baseline, experimental, production)
+These have useful content but should be documented or packaged more carefully before presenting them as Codex-ready:
 
-**Verdict:** The most organized and up-to-date. Should be canonical.
+- `persona-forge`
+- `persona-forge-online`
+- `find-skills`
+- `context-window-inspector`
+- `self-audit`
+- `skill-police`
 
----
+### Claude-only for now
 
-## Consolidation
+These are currently Claude runtime adapters or are strongly tied to Claude agent semantics:
 
-Migrated. **This is now the canonical repo.** Both source repos can be archived.
+- `kim`
+- `scout`
+- `config-cleaner`
+- `chris`
+- `major-lazer`
 
-### Migrated from `claude-configs`
+## Installation Overview
 
-| Source | Destination | Notes |
-|--------|-------------|-------|
-| `investigations/` | `investigations/` | Claudemem incident postmortem |
-| `roadmap.md` | `docs/roadmap.md` | 4-phase optimization roadmap |
-| `plan.md` | `docs/philosophy.md` | Core principles distilled from the incident |
-| `.claude/settings.json` | `configs/reference/settings.json` | Plugin config reference example |
-| `.claude/settings.local.json` | `configs/reference/settings.local.json` | Permissions/MCP reference example |
-| `.mcp.json` | `configs/reference/mcp.json` | MCP server definitions reference |
-| `claude-viewer/` | `tools/claude-viewer/` | Conversation history viewer with MCP integration |
-| `.claude/commands/cluddha.md` | — | Skipped — thin wrapper for global agent |
-| Empty `configs/`, `docs/`, `scripts/` | — | Skipped — structure already exists here |
+### Claude Code
 
-### Migrated from `up_claude`
+Use the installation flow in [`AGENTS.md`](./AGENTS.md).
 
-| Source | Destination | Notes |
-|--------|-------------|-------|
-| `kim-evolution/kim.md` | `docs/kim-history.md` | Early Kim definition, useful for diffing |
-| `CANDIDATES.md` | `docs/ecosystem-catalog.md` | Community catalog of plugin marketplaces, MCP servers, agents, skills |
-| Everything else | — | Superseded by actual implementation |
+In short:
 
-### Archive commands
+- copy a whole skill directory into `~/.claude/skills/<name>/`
+- copy an agent markdown file into `~/.claude/agents/<name>.md`
 
-```bash
-mv ~/proj/up_claude ~/proj/_archive/up_claude
-mv ~/proj/claude-configs ~/proj/_archive/claude-configs
+### Codex Local Skill Installation
+
+Codex can use skill directories directly for local authoring and experimentation.
+
+Current local convention on this machine:
+
+- `~/.codex/skills/<name>/SKILL.md`
+
+Direct installation options:
+
+- copy the whole skill directory
+- symlink the skill directory for local development
+
+Guidance:
+
+- symlink the **entire** skill directory, not just `SKILL.md`
+- expect to restart Codex if a newly added skill is not picked up immediately
+- do not assume a parallel `~/.codex/agents` install path
+
+### Codex Plugin Direction
+
+For reusable distribution, Codex should be treated as:
+
+- **skill** = authoring unit
+- **plugin** = installable distribution unit
+
+This repo does not yet implement the planned Codex plugins. The strategy and rationale are documented in:
+
+- [`docs/codex-packaging.md`](./docs/codex-packaging.md)
+- [`docs/personality-strategy.md`](./docs/personality-strategy.md)
+
+## Canonical Docs
+
+The current repo model is defined by four docs:
+
+- [`docs/repo-model.md`](./docs/repo-model.md)
+- [`docs/history-and-lineage.md`](./docs/history-and-lineage.md)
+- [`docs/codex-packaging.md`](./docs/codex-packaging.md)
+- [`docs/personality-strategy.md`](./docs/personality-strategy.md)
+
+Everything else under `docs/`, `tasks/`, and `up_claude/` should be treated as source material, retained only because it still contains useful rationale, raw research, or detailed specs.
+
+## Repository Structure
+
+```text
+ccconfig/
+├── skills/           # Canonical reusable workflow content
+├── agents/           # Claude-specific runtime adapters
+├── configs/          # Reference manifests and packaging helpers
+├── docs/             # Canonical docs plus retained source material
+├── investigations/   # Raw incident and research evidence
+├── tasks/            # Selected detailed design packets
+└── up_claude/        # Archived source material from earlier design work
 ```
 
----
+## Historical Context
 
-## Current Priorities
+The repo grew out of the 2025-12-18 claude-mem overhead investigation and the follow-on push to:
 
-From the consolidated roadmap, the open work:
+- audit what actually consumes tokens
+- search for existing tools before building
+- keep observability pull-based rather than always-on
+- separate reusable skills from runtime-specific adapters
 
-1. **Context Window Inspector skill** — spec in `AGENTS.md`, not yet built
-2. **Config Cleaner agent** — spec in `AGENTS.md`, not yet built
-3. **Observability** — lightweight token usage tracking (roadmap Phase 2), no implementation yet
-4. **Config profiles** — `configs/` structure exists, no profiles yet populated
+That lineage is summarized in [`docs/history-and-lineage.md`](./docs/history-and-lineage.md).
 
----
+## License
 
-## Key Lesson (from the claude-mem Incident)
-
-> "Memory systems need clear ROI measurement and project-scoped context. Global context injection from unrelated projects = pure waste. Search for existing solutions before building. Observe without creating overhead."
-
-This principle shapes every decision in this repo: measure before optimizing, pull-based visibility not push-based monitoring, and treat configs as code — version control, test, iterate.
+MIT

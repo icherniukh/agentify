@@ -2,6 +2,8 @@
 
 This repo is a catalog of Claude Code skills and agents. Users will ask you to install one, several, or all of them.
 
+This file is intentionally **Claude-specific**. Codex support is documented separately in the repository docs because Codex uses skills plus plugins rather than this `agents/` installation flow.
+
 ## Installation Mechanics
 
 **Skills** are directories containing `SKILL.md` plus optional `references/`, `scripts/`, `templates/`:
@@ -35,6 +37,7 @@ When asked to install everything, install only the **General Purpose** items by 
 | `self-audit` | Periodic audit of Claude Code config quality |
 | `skill-police` | Audits skills for spec compliance and frontmatter correctness |
 | `terminal-tool-bootstrap` | Installs/configures terminal tools (yazi, zellij, fzf, bat, etc.) |
+| `context-window-inspector` | Estimates context window overhead and audits Claude Code configuration for token bloat |
 
 ### Domain-Specific Skills
 
