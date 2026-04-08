@@ -4,12 +4,14 @@ This repo is a catalog of Claude Code skills and agents. Users will ask you to i
 
 This file is intentionally **Claude-specific**. Codex support is documented separately in the repository docs because Codex uses skills plus plugins rather than this `agents/` installation flow.
 
-`promptonality` supports Claude in two forms:
+`promptonality` is installed as a Claude Code plugin. It provides the five persona skills plus
+neutral workflow cores for dynamic composition.
 
-- **Standalone skills** under `skills/persona-*` — the five core persona skills, installed by copying into `~/.claude/skills/`
-- **Plugin package** under `plugins/promptonality/claude-plugin/` — the same five persona skills plus neutral workflow cores, installed as a unit
+```bash
+claude plugin install promptonality@local
+```
 
-The plugin also includes neutral workflow cores that can be composed dynamically with any personality pack via `persona-start` or `persona-apply`:
+The plugin includes neutral workflow cores composable with any personality pack via `persona-start` or `persona-apply`:
 
 | Workflow Core | What It Does |
 |---------------|-------------|
@@ -18,7 +20,7 @@ The plugin also includes neutral workflow cores that can be composed dynamically
 
 To apply a persona to a workflow core, use `persona-start` — no dedicated variant skill required. For example: "use `orchestrator-core` with the Sam Harris persona for this session."
 
-Generate the Claude plugin package with:
+To regenerate the plugin package after editing personas or skills:
 
 ```bash
 python3 plugins/promptonality/scripts/export_claude_plugin.py
@@ -26,17 +28,20 @@ python3 plugins/promptonality/scripts/export_claude_plugin.py
 
 ## Installation Mechanics
 
-**Skills** are directories containing `SKILL.md` plus optional `references/`, `scripts/`, `templates/`:
-```
-cp -r skills/<name>/ ~/.claude/skills/<name>/
-```
-
-**Agents** are single `.md` files with YAML frontmatter:
-```
-cp agents/<name>.md ~/.claude/agents/<name>.md
+**Skills** (non-promptonality) are installed as symlinks from the repo:
+```bash
+ln -s /path/to/ccconfig/skills/<name> ~/.claude/skills/<name>
 ```
 
-Always copy the entire skill directory, not just `SKILL.md` — reference files and scripts are required for the skill to function.
+**Agents** are installed as symlinks too:
+```bash
+ln -s /path/to/ccconfig/agents/<name>.md ~/.claude/agents/<name>.md
+```
+
+Symlinks mean edits in the repo take effect immediately — no re-install step.
+
+> Previous instructions described a `cp -r` copy-based approach. That is archived in
+> `docs/_archive/install-pre-plugin.md`.
 
 ## Handling "Install All"
 
