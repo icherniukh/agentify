@@ -5,7 +5,7 @@ Reusable skills and runtime adapters for two related but different environments:
 - **Claude Code** uses skills and agents.
 - **Codex** uses skills and plugins.
 
-This repository treats **skills** as the canonical reusable content. Claude-specific agents live in [`agents/`](./agents), while Codex support is documented as skill installation plus future plugin packaging rather than a direct agent-to-agent mapping.
+This repository treats **skills** as the canonical reusable content. Claude-specific agents live in [`agents/`](./agents), while Codex support is documented as skill installation plus repo-local plugins rather than a direct agent-to-agent mapping.
 
 ## What This Repo Is
 
@@ -33,6 +33,7 @@ This repo is **not** currently an active backup/deploy/testing platform for Clau
 - **Optional metadata**: `skills/<name>/agents/openai.yaml`
 - **Installable distribution unit**: plugins
 - **Local development path**: direct skill installation or symlink-based authoring
+- **Current plugin example**: [`plugins/promptonality/`](./plugins/promptonality)
 
 Important distinction:
 
@@ -108,6 +109,23 @@ Guidance:
 - do not assume a parallel `~/.codex/agents` install path
 - use `scripts/link-agent-assets.sh --codex-only --apply` if you want the curated Codex-ready skill subset symlinked into `~/.codex/skills/`
 
+### Codex Plugin Source
+
+This repo currently includes one repo-local Codex plugin:
+
+- [`plugins/promptonality/`](./plugins/promptonality)
+
+Key files:
+
+- plugin manifest: [`plugins/promptonality/.codex-plugin/plugin.json`](./plugins/promptonality/.codex-plugin/plugin.json)
+- plugin docs: [`plugins/promptonality/README.md`](./plugins/promptonality/README.md)
+
+Guidance:
+
+- treat the plugin folder in-repo as the source of truth
+- do not document or imply an invented stable `~/.codex/plugins/...` install path unless Codex runtime docs explicitly support it
+- use direct skill installation only for loose skills; Promptonality is packaged as a plugin source
+
 ### Codex Plugin Direction
 
 For reusable distribution, Codex should be treated as:
@@ -115,7 +133,7 @@ For reusable distribution, Codex should be treated as:
 - **skill** = authoring unit
 - **plugin** = installable distribution unit
 
-This repo does not yet implement the planned Codex plugins. The strategy and rationale are documented in:
+This repo currently includes one local Codex plugin implementation, `promptonality`. The broader packaging strategy and rationale are documented in:
 
 - [`docs/codex-packaging.md`](./docs/codex-packaging.md)
 - [`docs/personality-strategy.md`](./docs/personality-strategy.md)
