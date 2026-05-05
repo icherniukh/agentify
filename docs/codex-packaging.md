@@ -99,7 +99,15 @@ Expected Codex plugin artifact:
 
 - `.codex-plugin/plugin.json`
 
-This repo does not yet implement the planned plugins. The current job of this document is to keep the packaging model explicit so later implementation work does not need to rediscover it.
+Current implemented example in this repo:
+
+- `plugins/promptonality/.codex-plugin/plugin.json`
+
+Current guidance:
+
+- treat `plugins/promptonality/` as the repo-local plugin source of truth
+- keep plugin-specific installation and export notes in `plugins/promptonality/README.md`
+- do not document or imply a stable user-home plugin install path unless Codex runtime docs explicitly support it
 
 ## Relationship to Existing Repo Files
 
