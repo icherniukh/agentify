@@ -64,6 +64,18 @@ testing/metrics/data/
 # Cache
 .cache/
 
+# Promptonality generated platform packages
+plugins/promptonality/codex/
+plugins/promptonality/claude/
+plugins/promptonality/gemini/
+
+# Promptonality generated compatibility skill copies
+skills/persona-apply/
+skills/persona-extract/
+skills/persona-extract-online/
+skills/persona-list/
+skills/persona-start/
+
 # Temporary files
 *.tmp
 *.bak

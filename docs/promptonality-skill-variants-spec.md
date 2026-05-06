@@ -1,7 +1,22 @@
 # Promptonality Skill Variants Spec
 
-Status: draft  
+Status: superseded
 Date: 2026-04-02
+Superseded by: `docs/personality-strategy.md`
+
+## Supersession Note
+
+This document captures an older compiled-variant direction. It is preserved as
+design history, not as the current project spec.
+
+The active model is asset-first:
+
+- personas are portable pack assets
+- users can add and update their own packs
+- entrypoint skills discover, validate, list, and compose packs
+- dedicated per-persona wrapper skills are not the default product shape
+
+See `docs/personality-strategy.md` for the current fundamental promises.
 
 ## Purpose
 
@@ -245,8 +260,8 @@ Recommended `variant.json` fields:
   "id": "sam-harris-orchestrator-variant",
   "display_name": "Sam Harris Orchestrator Variant",
   "kind": "variant",
-  "base_skill": "plugins/promptonality/skills/orchestrator-core/SKILL.md",
-  "personality_pack": "plugins/promptonality/assets/personalities/sam-harris.yaml",
+  "base_skill": "plugins/promptonality/src/skills/orchestrator-core/SKILL.md",
+  "personality_pack": "plugins/promptonality/src/assets/personalities/sam-harris.yaml",
   "local_edits": [],
   "created_by": "promptonality",
   "created_at": "2026-04-02",

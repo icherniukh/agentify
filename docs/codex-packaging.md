@@ -101,11 +101,13 @@ Expected Codex plugin artifact:
 
 Current implemented example in this repo:
 
-- `plugins/promptonality/.codex-plugin/plugin.json`
+- source: `plugins/promptonality/src/`
+- generated Codex adapter: `plugins/promptonality/codex/.codex-plugin/plugin.json`
 
 Current guidance:
 
-- treat `plugins/promptonality/` as the repo-local plugin source of truth
+- treat `plugins/promptonality/src/` as the platform-neutral source of truth
+- treat `plugins/promptonality/codex/` as an ignored generated Codex adapter
 - keep plugin-specific installation and export notes in `plugins/promptonality/README.md`
 - do not document or imply a stable user-home plugin install path unless Codex runtime docs explicitly support it
 
