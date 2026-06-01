@@ -4,38 +4,9 @@ This repo is a catalog of Claude Code skills and agents. Users will ask you to i
 
 This file is intentionally **Claude-specific**. Codex support is documented separately in the repository docs because Codex uses skills plus plugins rather than this `agents/` installation flow.
 
-`promptonality` is installed as a Claude Code plugin. It provides persona entrypoint
-skills for listing, applying, starting, and extracting persona assets.
-
-```bash
-claude plugin install promptonality@local
-```
-
-Promptonality's project promise is asset-first: bundled persona packs are starter
-assets, and user-created packs should be first-class once they satisfy the pack
-contract.
-
-The repo source also includes neutral workflow cores that can be composed with
-persona packs via `persona-start` or `persona-apply`:
-
-| Workflow Core | What It Does |
-|---------------|-------------|
-| `orchestrator-core` | Neutral orchestration workflow: decomposes tasks, selects specialists, compresses state |
-| `architecture-review-core` | Neutral architecture review: evaluates structure, boundaries, abstractions, dependencies, and maintainability risks |
-
-To apply a persona asset to a workflow, use `persona-start` or `persona-apply`.
-No dedicated per-persona wrapper skill is required. For example: "use
-`architecture-review-core` with the Hikaru Nakamura persona for this review."
-
-To regenerate platform packages after editing personas or skills:
-
-```bash
-python3 plugins/promptonality/scripts/package.py build --target all
-```
-
 ## Installation Mechanics
 
-**Skills** (non-promptonality) are installed as symlinks from the repo:
+**Skills** are installed as symlinks from the repo:
 ```bash
 ln -s /path/to/ccconfig/skills/<name> ~/.claude/skills/<name>
 ```
@@ -63,11 +34,6 @@ When asked to install everything, install only the **General Purpose** items by 
 | `cli-jesus` | Expert command-line advice grounded in art-of-command-line reference |
 | `conventional-commits` | Enforces Conventional Commits spec for git commit messages |
 | `git-context-recovery` | Recovers prior-session work context from git history |
-| `persona-apply` | Applies a persona asset to the current task or thread without making it session-default |
-| `persona-extract` | Distills a public figure or character into a normalized persona pack |
-| `persona-extract-online` | Research-backed version of persona-extract |
-| `persona-list` | Lists discovered persona packs available in the Claude-facing promptonality package |
-| `persona-start` | Makes a workflow or persona-composed mode the default for the rest of the session |
 | `python-class-design` | Reviews Python class design, catches antipatterns |
 | `reduce-hallucinations` | Prompt grounding techniques for factual accuracy |
 | `round` | Session transition notes for multi-day work continuity |
@@ -96,7 +62,7 @@ When asked to install everything, install only the **General Purpose** items by 
 | `major-lazer` | DJ workflow, MIDI mapping, controller ergonomics, mix strategy — in character as the Guardian of the Groove |
 | `chris` | Adversarial research — tries to prove claims wrong, finds edge cases |
 | `kim` | Claude Code configuration specialist with structured workflow |
-| `scout` | Searches for existing MCP servers/plugins/agents before you build from scratch |
+| `scout` | Searches for existing MCP servers/plugins/agents before you build from scratch; refresh source map lives in `agents/scout-refs/ecosystem-sources.md` |
 
 ## Dependencies
 
@@ -105,9 +71,6 @@ Most skills are self-contained. Exceptions:
 - **beads**: Requires `bd` CLI installed (`pip install beads-cli` or equivalent)
 - **cli-jesus**: Bundles `references/art-of-command-line.md` (included in skill dir)
 - **ghostty-config**: Bundles 4 reference files (included in skill dir)
-- **persona-list**: Bundles persona YAMLs plus `scripts/persona_list.py`
-- **persona-start** / **persona-apply**: Bundle persona YAML references
-- **persona-extract** / **persona-extract-online**: Bundle the persona-pack contract reference
 - **terminal-tool-bootstrap**: Bundles reference + probe script (included in skill dir)
 - **chris** (agent): References `mcp__web_reader__webReader` tool — works without it but loses web reading capability. `WebSearch` + `WebFetch` are built-in alternatives.
 

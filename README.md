@@ -1,177 +1,70 @@
 # ccconfig
 
-Reusable skills and runtime adapters for two related but different environments:
+Reusable agent skills and Claude agents.
 
-- **Claude Code** uses skills and agents.
-- **Codex** uses skills and plugins.
+## Install
 
-This repository treats **skills** as the canonical reusable content. Claude-specific agents live in [`agents/`](./agents), while Codex support is documented as skill installation plus repo-local plugins rather than a direct agent-to-agent mapping.
+### Skills
 
-## What This Repo Is
-
-This is a catalog of:
-
-- reusable workflow skills under [`skills/`](./skills)
-- Claude-specific runtime adapters under [`agents/`](./agents)
-- packaging and compatibility references under [`configs/`](./configs)
-- curated design history under [`docs/`](./docs)
-- preserved raw research under [`investigations/`](./investigations) and selected [`tasks/`](./tasks)
-
-This repo is **not** currently an active backup/deploy/testing platform for Claude or Codex configs. Some older documents describe that direction; they are retained as historical source material, not current product behavior.
-
-## Runtime Model
-
-### Claude Code
-
-- **Canonical content**: skills in `skills/<name>/SKILL.md`
-- **Runtime adapters**: agent definitions in `agents/*.md`
-- **Install flow**: described in [`AGENTS.md`](./AGENTS.md)
-
-### Codex
-
-- **Canonical content**: skills in `skills/<name>/SKILL.md`
-- **Optional metadata**: `skills/<name>/agents/openai.yaml`
-- **Installable distribution unit**: plugins
-- **Local development path**: direct skill installation or symlink-based authoring
-- **Current plugin example**: [`plugins/promptonality/`](./plugins/promptonality)
-
-Important distinction:
-
-- `SKILL.md` is the canonical skill artifact.
-- `agents/openai.yaml` is optional Codex/OpenAI metadata for UX and dependency declaration.
-- Plugins package one or more skills plus optional assets, MCP/app integrations, and UI metadata.
-
-## Portability
-
-This repo contains a mix of portable and runtime-specific artifacts.
-
-### Portable-first
-
-These are the best current candidates for dual use in Claude Code and Codex with minimal adaptation:
-
-- `cli-jesus`
-- `conventional-commits`
-- `git-context-recovery`
-- `python-class-design`
-- `reduce-hallucinations`
-- `round`
-- `terminal-tool-bootstrap`
-
-### Likely Codex wrapper needed
-
-These have useful content but should be documented or packaged more carefully before presenting them as Codex-ready:
-
-- `persona-forge`
-- `persona-forge-online`
-- `find-skills`
-- `context-window-inspector`
-- `self-audit`
-- `skill-police`
-
-### Claude-only for now
-
-These are currently Claude runtime adapters or are strongly tied to Claude agent semantics:
-
-- `kim`
-- `scout`
-- `config-cleaner`
-- `chris`
-- `major-lazer`
-
-## Installation Overview
-
-### Claude Code
-
-Use the installation flow in [`AGENTS.md`](./AGENTS.md).
-
-In short:
-
-- copy a whole skill directory into `~/.claude/skills/<name>/`
-- copy an agent markdown file into `~/.claude/agents/<name>.md`
-
-### Codex Local Skill Installation
-
-Codex can use skill directories directly for local authoring and experimentation.
-
-Current local convention on this machine:
-
-- `~/.codex/skills/<name>/SKILL.md`
-
-Direct installation options:
-
-- copy the whole skill directory
-- symlink the skill directory for local development
-
-Guidance:
-
-- symlink the **entire** skill directory, not just `SKILL.md`
-- expect to restart Codex if a newly added skill is not picked up immediately
-- do not assume a parallel `~/.codex/agents` install path
-- use `scripts/link-agent-assets.sh --codex-only --apply` if you want the curated Codex-ready skill subset symlinked into `~/.codex/skills/`
-
-### Codex Plugin Source
-
-This repo currently includes one repo-local Codex plugin:
-
-- [`plugins/promptonality/`](./plugins/promptonality)
-
-Key files:
-
-- plugin manifest: [`plugins/promptonality/.codex-plugin/plugin.json`](./plugins/promptonality/.codex-plugin/plugin.json)
-- plugin docs: [`plugins/promptonality/README.md`](./plugins/promptonality/README.md)
-
-Guidance:
-
-- treat the plugin folder in-repo as the source of truth
-- do not document or imply an invented stable `~/.codex/plugins/...` install path unless Codex runtime docs explicitly support it
-- use direct skill installation only for loose skills; Promptonality is packaged as a plugin source
-
-### Codex Plugin Direction
-
-For reusable distribution, Codex should be treated as:
-
-- **skill** = authoring unit
-- **plugin** = installable distribution unit
-
-This repo currently includes one local Codex plugin implementation, `promptonality`. The broader packaging strategy and rationale are documented in:
-
-- [`docs/codex-packaging.md`](./docs/codex-packaging.md)
-- [`docs/personality-strategy.md`](./docs/personality-strategy.md)
-
-## Canonical Docs
-
-The current repo model is defined by four docs:
-
-- [`docs/repo-model.md`](./docs/repo-model.md)
-- [`docs/history-and-lineage.md`](./docs/history-and-lineage.md)
-- [`docs/codex-packaging.md`](./docs/codex-packaging.md)
-- [`docs/personality-strategy.md`](./docs/personality-strategy.md)
-
-Everything else under `docs/`, `tasks/`, and `up_claude/` should be treated as source material, retained only because it still contains useful rationale, raw research, or detailed specs.
-
-## Repository Structure
-
-```text
-ccconfig/
-├── skills/           # Canonical reusable workflow content
-├── agents/           # Claude-specific runtime adapters
-├── configs/          # Reference manifests and packaging helpers
-├── docs/             # Canonical docs plus retained source material
-├── investigations/   # Raw incident and research evidence
-├── tasks/            # Selected detailed design packets
-└── up_claude/        # Archived source material from earlier design work
+```bash
+ln -s /path/to/ccconfig/skills/<name> ~/.claude/skills/<name>
 ```
 
-## Historical Context
+### Agents
 
-The repo grew out of the 2025-12-18 claude-mem overhead investigation and the follow-on push to:
+```bash
+ln -s /path/to/ccconfig/agents/<name>.md ~/.claude/agents/<name>.md
+```
 
-- audit what actually consumes tokens
-- search for existing tools before building
-- keep observability pull-based rather than always-on
-- separate reusable skills from runtime-specific adapters
+Symlinks mean edits in the repo take effect immediately — no re-install step.
 
-That lineage is summarized in [`docs/history-and-lineage.md`](./docs/history-and-lineage.md).
+## What's Available
+
+### General Purpose Skills
+
+| Skill | What It Does |
+|-------|-------------|
+| `cli-jesus` | Expert command-line advice grounded in art-of-command-line reference |
+| `conventional-commits` | Enforces Conventional Commits spec for git commit messages |
+| `git-context-recovery` | Recovers prior-session work context from git history |
+| `python-class-design` | Reviews Python class design, catches antipatterns |
+| `reduce-hallucinations` | Prompt grounding techniques for factual accuracy |
+| `round` | Session transition notes for multi-day work continuity |
+| `self-audit` | Periodic audit of Claude Code config quality |
+| `skill-police` | Audits skills for spec compliance and frontmatter correctness |
+| `terminal-tool-bootstrap` | Installs/configures terminal tools (yazi, zellij, fzf, bat, etc.) |
+| `context-window-inspector` | Estimates context window overhead and audits Claude Code configuration for token bloat |
+| `find-skills` | Locates relevant skills and agents for a given task |
+
+### Domain-Specific Skills
+
+| Skill | Domain | What It Does |
+|-------|--------|-------------|
+| `beads` | Task tracking | Reference for `bd` CLI task tracker (requires `bd` installed) |
+| `ep133-device` | Music hardware | EP-133 KO-II device slot/bank/pad layout |
+| `ep133-protocol` | Music hardware | EP-133 KO-II SysEx protocol for upload/download |
+| `ghostty-config` | Terminal | Ghostty terminal emulator configuration |
+| `midi-rekordbox` | DJ software | Rekordbox MIDI Learn CSV mapping format |
+| `pcq-reviewer` | Burning Man | Placement questionnaire review for camp applications |
+| `session-notes-writer` | Workflow | Proactive session note writing (archived, experimental) |
+
+### Agents
+
+| Agent | What It Does |
+|-------|-------------|
+| `config-cleaner` | Scans Claude Code config for stale refs, dead permissions, orphans. Report-only. |
+| `major-lazer` | DJ workflow, MIDI mapping, controller ergonomics, mix strategy — in character as the Guardian of the Groove |
+| `chris` | Adversarial research — tries to prove claims wrong, finds edge cases |
+| `kim` | Claude Code configuration specialist with structured workflow |
+| `scout` | Searches for existing MCP servers/plugins/agents before you build from scratch |
+
+## Repo Layout
+
+```text
+skills/      Reusable standalone skills
+agents/      Claude-specific agents
+docs/        Design notes and contracts
+```
 
 ## License
 

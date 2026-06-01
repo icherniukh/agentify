@@ -99,8 +99,6 @@ The underlying content is useful, but Codex-facing packaging or adaptation is st
 
 Current baseline:
 
-- `persona-forge`
-- `persona-forge-online`
 - `find-skills`
 - `context-window-inspector`
 - `self-audit`

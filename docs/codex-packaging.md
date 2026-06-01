@@ -93,23 +93,12 @@ Good plugin candidates:
 - bundles of related skills
 - skills that need MCP or app dependencies
 - skills that benefit from better Codex discovery and UI polish
-- cross-cutting systems such as personality handling
 
 Expected Codex plugin artifact:
 
 - `.codex-plugin/plugin.json`
 
-Current implemented example in this repo:
-
-- source: `plugins/promptonality/src/`
-- generated Codex adapter: `plugins/promptonality/codex/.codex-plugin/plugin.json`
-
-Current guidance:
-
-- treat `plugins/promptonality/src/` as the platform-neutral source of truth
-- treat `plugins/promptonality/codex/` as an ignored generated Codex adapter
-- keep plugin-specific installation and export notes in `plugins/promptonality/README.md`
-- do not document or imply a stable user-home plugin install path unless Codex runtime docs explicitly support it
+Do not document or imply a stable user-home plugin install path unless Codex runtime docs explicitly support it.
 
 ## Relationship to Existing Repo Files
 
@@ -137,8 +126,6 @@ For Codex planning, the relevant direction is `.codex-plugin/plugin.json`.
 
 ### Candidates that should be wrapped or adapted first
 
-- `persona-forge`
-- `persona-forge-online`
 - `find-skills`
 - `context-window-inspector`
 - `self-audit`
