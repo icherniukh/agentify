@@ -1,1 +1,0 @@
-claude --resume "samharris-audit"
